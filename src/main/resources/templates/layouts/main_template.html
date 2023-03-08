@@ -1,0 +1,20 @@
+<!-- layouts > main_template.html, layout struct -->
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.tltraq.net.nz.thymeleaf/layout"
+>
+<head>
+  <meta charset="UTF-8">
+  <title>Main</title>
+</head>
+<body>
+<div th:replace="fragments/header::header"></div>
+<hr>
+<div th:replace="fragments/menu::menu"></div>
+<hr>
+<div align="center" layout:fragment="content"></div>
+<div th:replace="fragments/footer::footer"></div>
+<hr>
+</body>
+</html>
