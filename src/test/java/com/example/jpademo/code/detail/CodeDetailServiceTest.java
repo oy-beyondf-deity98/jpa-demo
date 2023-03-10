@@ -50,9 +50,9 @@ class CodeDetailServiceTest {
 
         CodeDetail codeDetail2 = new CodeDetail();
         codeDetail2.setCommonCode(code2);
-        codeDetail2.setDetailCode("10");
-        codeDetail2.setDetailCodeName("호두");
-        codeDetail2.setOrderNum(1);
+        codeDetail2.setDetailCode("20");
+        codeDetail2.setDetailCodeName("호두2222");
+        codeDetail2.setOrderNum(2);
 
         codeDetailService.create(codeDetail2);
 
@@ -161,23 +161,108 @@ class CodeDetailServiceTest {
     @DisplayName("상세 코드 존재 확인")
     void detailCodeExits(){
         // given
+        CommonCode code = new CommonCode();
+        code.setCode("type");
+        code.setName("타입명");
+
+        codeService.create(code);
+
+        CommonCode code2 = new CommonCode();
+        code2.setCode("type");
+
+        CodeDetail codeDetail = new CodeDetail();
+        codeDetail.setCommonCode(code2);
+        codeDetail.setDetailCode("10");
+        codeDetail.setDetailCodeName("호두");
+        codeDetail.setOrderNum(1);
+
+        codeDetailService.create(codeDetail);
+
         // when
+        boolean exitsCodeDetail = codeDetailService.exitsCodeDetail(codeDetail.getCommonCode(), codeDetail.getDetailCode());
+
         // then
+        assertThat(exitsCodeDetail).isTrue();
     }
 
     @Test
     @DisplayName("상세 코드 중복 저장 확인")
     void detailCodeDuplicationError(){
         // given
+        CommonCode code = new CommonCode();
+        code.setCode("type");
+        code.setName("타입명");
+
+        codeService.create(code);
+
+
         // when
+        CommonCode code2 = new CommonCode();
+        code2.setCode("type");
+
+        CodeDetail codeDetail = new CodeDetail();
+        codeDetail.setCommonCode(code2);
+        codeDetail.setDetailCode("10");
+        codeDetail.setDetailCodeName("호두");
+        codeDetail.setOrderNum(1);
+
+        codeDetailService.create(codeDetail);
+
+        // when
+        CodeDetail codeDetail2 = new CodeDetail();
+        codeDetail2.setCommonCode(code2);
+        codeDetail2.setDetailCode("10");
+        codeDetail2.setDetailCodeName("호두");
+        codeDetail2.setOrderNum(1);
+
+
         // then
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
+            codeDetailService.create(codeDetail2);
+        });
+
+        assertThat(exception.getMessage()).isEqualTo("코드가 존재합니다.");
     }
 
     @Test
     @DisplayName("공통 코드 삭제할때 하위 코드 모두 삭제 확인")
     void deleteCommonCodeClear(){
         // given
+        // given
+        CommonCode code = new CommonCode();
+        code.setCode("type");
+        code.setName("타입명");
+
+        codeService.create(code);
+
+
         // when
+        CommonCode code2 = new CommonCode();
+        code2.setCode("type");
+
+        CodeDetail codeDetail = new CodeDetail();
+        codeDetail.setCommonCode(code2);
+        codeDetail.setDetailCode("10");
+        codeDetail.setDetailCodeName("호두");
+        codeDetail.setOrderNum(1);
+
+        codeDetailService.create(codeDetail);
+
+        CodeDetail codeDetail2 = new CodeDetail();
+        codeDetail2.setCommonCode(code2);
+        codeDetail2.setDetailCode("20");
+        codeDetail2.setDetailCodeName("호두2222");
+        codeDetail2.setOrderNum(2);
+
+        codeDetailService.create(codeDetail2);
+
+        // when
+        codeService.delete(code);
+
         // then
+        CommonCode code3 = new CommonCode();
+        code3.setCode("type");
+        List<CodeDetail> codeDetailList = codeDetailService.listCodeDetail(code3);
+        assertThat(codeDetailList.size()).isEqualTo(0);
     }
 }

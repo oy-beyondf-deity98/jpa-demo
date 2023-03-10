@@ -13,4 +13,6 @@ public interface CodeDetailService {
     void delete(CodeDetail codeDetail);
 
     void update(CodeDetail updateCodeDetail);
+
+    boolean exitsCodeDetail(CommonCode commonCode, String detailCode);
 }

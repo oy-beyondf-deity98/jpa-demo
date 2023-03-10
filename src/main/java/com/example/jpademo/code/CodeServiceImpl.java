@@ -1,6 +1,8 @@
 package com.example.jpademo.code;
 
+import com.example.jpademo.code.bean.CodeDetail;
 import com.example.jpademo.code.bean.CommonCode;
+import com.example.jpademo.code.detail.CodeDetailRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,6 +15,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class CodeServiceImpl implements CodeService {
     final CommonCodeRepository commonCodeRepository;
+    final CodeDetailRepository codeDetailRepository;
 
     @Override
     public void create(CommonCode code) {
@@ -38,7 +41,12 @@ public class CodeServiceImpl implements CodeService {
 
     @Override
     public void delete(CommonCode code) {
+        List<CodeDetail> findCodeDetailList = codeDetailRepository.findByCommonCode(code);
+        if(findCodeDetailList.size() > 0){
+            codeDetailRepository.deleteByCommonCode(code);
+        }
         commonCodeRepository.delete(code);
+
     }
 
     @Override
