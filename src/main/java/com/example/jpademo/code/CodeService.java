@@ -9,10 +9,13 @@ public interface CodeService {
 
     void create(CommonCode code);
 
-    Optional<CommonCode> getCommonCode(CommonCode code);
+    Optional<CommonCode> read(String code);
+    Optional<CommonCode> read(CommonCode code);
 
+    void update(String code);
     void update(CommonCode findCommonCode);
 
+    void delete(String code);
     void delete(CommonCode code);
 
     boolean exitsCode(String codeString);

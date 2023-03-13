@@ -1,7 +1,6 @@
 package com.example.jpademo.code;
 
 import com.example.jpademo.code.bean.CommonCode;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +28,7 @@ class CodeServiceTest {
 
         codeService.create(code);
 
-        CommonCode findCommonCode = codeService.getCommonCode(code).get();
+        CommonCode findCommonCode = codeService.read(code).get();
 
         assertThat(code.getCode()).isEqualTo(findCommonCode.getCode());
     }
@@ -43,12 +42,12 @@ class CodeServiceTest {
 
         codeService.create(code);
 
-        CommonCode findCommonCode = codeService.getCommonCode(code).get();
+        CommonCode findCommonCode = codeService.read(code).get();
 
         findCommonCode.setName("타입명2");
         codeService.update(findCommonCode);
 
-        CommonCode updateCommonCode = codeService.getCommonCode(findCommonCode).get();
+        CommonCode updateCommonCode = codeService.read(findCommonCode).get();
 
         assertThat(code.getName()).isNotEqualTo(findCommonCode.getName());
         assertThat(findCommonCode.getName()).isEqualTo(updateCommonCode.getName());
@@ -66,7 +65,7 @@ class CodeServiceTest {
         // then
         codeService.delete(code);
 
-        Optional<CommonCode> commonCode = codeService.getCommonCode(code);
+        Optional<CommonCode> commonCode = codeService.read(code);
 
         assertThat(commonCode).isEmpty();
     }
