@@ -55,7 +55,7 @@ class CodeDetailServiceTest {
         codeDetailService.create(codeDetail2);
 
         //TODO 테스트떄에는 트랜잭션이 다 처리 안된상태에서 조회하면 오류가 발생한다. 그래서 saveAndFlush 되어야한다. 그 비슷한 상황이나..
-        List<CodeDetail> list = codeDetailService.listCodeDetail(code2);
+        List<CodeDetail> list = codeDetailService.list(code2);
 
 
         // then
@@ -95,7 +95,7 @@ class CodeDetailServiceTest {
 
         // when
         codeDetailService.delete(codeDetail2);
-        List<CodeDetail> list = codeDetailService.listCodeDetail(code2);
+        List<CodeDetail> list = codeDetailService.list(code2);
 
         // then
         assertThat(list.size()).isEqualTo(1);
@@ -141,7 +141,7 @@ class CodeDetailServiceTest {
 
         codeDetailService.update(updateCodeDetail);
 
-        List<CodeDetail> codeDetailList = codeDetailService.listCodeDetail(code2);
+        List<CodeDetail> codeDetailList = codeDetailService.list(code2);
         // then
 
         assertThat(codeDetailList.size()).isEqualTo(2);
@@ -260,7 +260,7 @@ class CodeDetailServiceTest {
         // then
         CommonCode code3 = new CommonCode();
         code3.setCode("type");
-        List<CodeDetail> codeDetailList = codeDetailService.listCodeDetail(code3);
+        List<CodeDetail> codeDetailList = codeDetailService.list(code3);
         assertThat(codeDetailList.size()).isEqualTo(0);
     }
 }

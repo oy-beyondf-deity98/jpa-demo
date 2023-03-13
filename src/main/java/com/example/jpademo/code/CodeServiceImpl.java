@@ -19,7 +19,7 @@ public class CodeServiceImpl implements CodeService {
 
     @Override
     public void create(CommonCode code) {
-        Optional<CommonCode> findCommonCode = commonCodeRepository.findById(code.getCode());
+        Optional<CommonCode> findCommonCode = commonCodeRepository.findByCode(code.getCode());
         if(findCommonCode.isPresent()){
             throw new IllegalArgumentException("이미 존재하는 코드입니다.");
         }

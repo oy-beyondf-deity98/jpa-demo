@@ -34,7 +34,7 @@ public class CodeController implements CrudController<CommonCode, String> {
     public void registerForm(Model model) {
         CommonCode code = getCode(null);
 
-        model.addAttribute(code);
+        model.addAttribute("code",code);
     }
 
     @PostMapping("/register")
@@ -53,13 +53,13 @@ public class CodeController implements CrudController<CommonCode, String> {
     @GetMapping("/read")
     public void read(String code, Model model) {
         CommonCode commonCode = getCode(code);
-        model.addAttribute(commonCode);
+        model.addAttribute("code",commonCode);
     }
 
     @GetMapping("/modify")
     public void modifyForm(String code, Model model) {
         CommonCode commonCode = getCode(code);
-        model.addAttribute(commonCode);
+        model.addAttribute("code",commonCode);
     }
 
     @PostMapping("/modify")
