@@ -22,9 +22,9 @@
           <td><span class="error_message" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">name의 에러메시지</span></td>
         </tr>
       </table>
-      <div>
+      <div style="display: flex;justify-content: center;">
         <button type="submit" name="btn" th:text="#{action.new}">등록</button>
-        <a th:text="#{action.list}" th:href="@{/code/list}">목록</a>
+        <button><a th:text="#{action.list}" th:href="@{/code/list}" style="padding-left: 10px">목록</a></button>
       </div>
     </form>
   </div>

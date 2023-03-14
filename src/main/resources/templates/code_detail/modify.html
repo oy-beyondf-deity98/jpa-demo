@@ -14,6 +14,12 @@
     <form method="post" th:action="@{/code_detail/modify}" th:object="${codeDetail}">
       <table>
         <tr>
+          <th th:text="#{commonCode.code}"></th><td><input type="text" th:id="commonCode" th:name="commonCode" th:value="*{commonCode.code}"></td><td></td>
+        </tr>
+        <tr>
+          <th th:text="#{commonCode.name}"></th><td><input type="text" th:field="*{commonCode.name}" readonly></td><td></td>
+        </tr>
+        <tr>
           <th th:text="#{commonCode.code}"></th><td><input type="text" th:field="*{seq}"></td><td></td>
         </tr>
         <tr>
@@ -26,11 +32,19 @@
           <td><input type="text" th:field="*{detailCodeName}"></td>
           <td><span class="error_message" th:if="${#fields.hasErrors('detailCodeName')}" th:errors="*{detailCodeName}">name의 에러메시지</span></td>
         </tr>
+        <tfoot>
+          <tr>
+            <td colspan="3">
+              <div class="button-group">
+                <button type="submit" name="btn" th:text="#{action.modify}">수정</button>
+                <button>
+                  <a th:text="#{action.list}" th:href="@{|/code_detail/list?commonCode=*{commonCode.code}|}">목록</a>
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tfoot>
       </table>
-      <div>
-        <button type="submit" name="btn" th:text="#{action.new}">수정</button>
-        <a th:text="#{action.list}" th:href="@{/code_detail/list}">목록</a>
-      </div>
     </form>
   </div>
 </body>

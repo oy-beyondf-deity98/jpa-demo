@@ -21,11 +21,21 @@
           <td><input type="text" th:field="*{name}"></td>
           <td><span class="error_message" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">name의 에러메시지</span></td>
         </tr>
+        <tfoot>
+        <tr>
+          <td colspan="3">
+            <div class="button-group">
+              <button type="submit" name="btn" th:text="#{action.modify
+              }">수정</button>
+              <button>
+                <a th:text="#{action.list}" th:href="@{/code/list}">목록</a>
+              </button>
+            </div>
+          </td>
+        </tr>
+        </tfoot>
       </table>
-      <div>
-        <button type="submit" name="btn" th:text="#{action.new}">수정</button>
-        <a th:text="#{action.list}" th:href="@{/code/list}">목록</a>
-      </div>
+      
     </form>
   </div>
 </body>

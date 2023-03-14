@@ -10,32 +10,41 @@
 </head>
 <body>
   <div layout:fragment="content">
-		<script th:inline="javascript">
-				const resultMsg = [[${msg}]];
-
-				if (resultMsg === "SUCCESS") {
-						alert([[#{common.processSuccess}]]);
-				}
-		</script>
-		<h2 th:text="#{code.header.list}">공통코드 리스트</h2>
-		<a th:href="@{/code/register}" th:text="#{action.new}">등록</a>
-		<table border="1">
-			<tr>
-				<th align="center" width="160" th:text="#{commonCode.code}">commonCode.code</th>
-				<th align="center" width="160" th:text="#{commonCode.name}">commonCode.name</th>
-				<th align="center" width="160"></th>
-				<th align="center" width="160"></th>
-			</tr>
-			<tr th:if="${#lists.isEmpty(list)}">
-				<td colspan="3">List is Empty</td>
-			</tr>
-			<tr th:each="commonCode : ${list}">
-				<td th:text="${commonCode.code}">commonCode.code</td>
-				<td th:text="${commonCode.name}">commonCode.name</td>
-				<td><a th:href="@{|/code/read?code=${commonCode.code}|}">보기</a></td>
-				<td><a th:href="@{|/code_detail/list?code=${commonCode.code}|}">상세코드</a></td>
-			</tr>
-		</table>
+    <script th:inline="javascript">
+      const resultMsg = [[${msg}]];
+  
+      if (resultMsg === "SUCCESS") {
+          alert([[#{common.processSuccess}]]);
+      }
+    </script>
+    <h2 th:text="#{code.header.list}">공통코드 리스트</h2>
+    <div>
+    
+    </div>
+    <table border="1">
+      <thead>
+        <tr>
+          <th colspan="4" border="0" style="border:0px">
+            <div class="button-group">
+              <button><a th:href="@{/code/register}" th:text="#{action.new}">등록</a></button>
+            </div>
+          </th>
+        </tr>
+        <tr>
+          <th align="center" width="160" th:text="#{commonCode.code}">commonCode.code</th>
+          <th align="center" width="160" th:text="#{commonCode.name}">commonCode.name</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tr th:if="${#lists.isEmpty(list)}">
+        <td colspan="3">List is Empty</td>
+      </tr>
+      <tr th:each="commonCode : ${list}">
+        <td th:text="${commonCode.code}">commonCode.code</td>
+        <td><a th:href="@{|/code/read?code=${commonCode.code}|}" th:text="${commonCode.name}">commonCode.name</a></td>
+        <td><button><a th:href="@{|/code_detail/list?code=${commonCode.code}|}">상세코드</a></button></td>
+      </tr>
+    </table>
   </div>
 </body>
 </html>

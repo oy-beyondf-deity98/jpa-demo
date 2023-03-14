@@ -54,7 +54,7 @@ public class CodeDetailController {
         service.create(codeDetail);
 
         redirectAttributes.addFlashAttribute("msg", "SUCCESS");
-        redirectAttributes.addFlashAttribute("code", codeDetail.getCommonCode().getCode());
+        redirectAttributes.addFlashAttribute("commonCode", codeDetail.getCommonCode().getCode());
 
         return "redirect:/code_detail/list";
     }
@@ -79,14 +79,16 @@ public class CodeDetailController {
 
         service.update(codeDetail);
         redirectAttributes.addFlashAttribute("msg", "SUCCESS");
+        redirectAttributes.addFlashAttribute("commonCode", codeDetail.getCommonCode().getCode());
         return "redirect:/code_detail/list";
     }
 
     @PostMapping("remove")
-    public String remove(CodeDetail codeDetail, RedirectAttributes redirectAttributes) {
+    public String remove(@Validated CodeDetail codeDetail, RedirectAttributes redirectAttributes) {
         service.delete(codeDetail);
 
         redirectAttributes.addFlashAttribute("msg", "SUCCESS");
+        redirectAttributes.addFlashAttribute("commonCode", codeDetail.getCommonCode().getCode());
 
         return "redirect:/code_detail/list";
     }
@@ -97,6 +99,6 @@ public class CodeDetailController {
         }
         Optional<CodeDetail> findCodeDetail = service.read(codeDetail);
 
-        return findCodeDetail.orElse(new CodeDetail());
+        return findCodeDetail.orElseThrow();
     }
 }

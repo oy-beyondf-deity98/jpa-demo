@@ -20,12 +20,24 @@
           <th th:text="#{commonCode.name}">commonCode.name</th>
           <td><input type="text" th:field="*{name}"></td>
         </tr>
+        <tfoot>
+        <tr>
+          <td colspan="2">
+            <div class="button-group">
+              <button>
+                <a th:text="#{action.modify}" th:href="@{|/code/modify?code=*{code}|}">수정</a>
+              </button>
+              <button type="submit" name="btn" th:text="#{action.remove}">삭제</button>
+              <button>
+                <a th:text="#{action.list}" th:href="@{/code/list}">목록</a>
+              </button>
+            </div>
+          </td>
+        </tr>
+        </tfoot>
+        
       </table>
-      <div>
-        <a th:text="#{action.modify}" th:href="@{|/code/modify?code=*{code}|}">수정</a>
-        <button type="submit" name="btn" th:text="#{action.remove}">삭제</button>
-        <a th:text="#{action.list}" th:href="@{/code/list}">목록</a>
-      </div>
+      
     </form>
   </div>
 </body>
