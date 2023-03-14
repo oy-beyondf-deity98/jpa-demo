@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net/thymeleaf/layout"
+      layout:decorate="~{/layouts/main_template}"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity"
+>
+<head>
+  <meta charset="UTF-8">
+  <title>오류 페이지(503)</title>
+</head>
+<body>
+<div layout:fragment="content">
+  <h1 th:text="#{error_server_stop}">서비스 중지</h1>
+  <a href="/" >Home</a>
+</div>
+</body>
+</html>
