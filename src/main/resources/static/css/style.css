@@ -1,0 +1,26 @@
+.button-group {
+    display: flex;
+    justify-content: end;
+}
+
+.button-group>button>a {
+    text-decoration-line: none;
+    color:black;
+}
+
+a {
+    text-decoration-line: none;
+    color:blue;
+}
+
+ul {
+    list-style: none;
+}
+
+ol {
+    list-style: none;
+}
+
+tbody td {
+    text-align:center;
+}

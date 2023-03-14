@@ -36,7 +36,7 @@ public class CodeDetailServiceImpl implements CodeDetailService {
     }
 
     @Override
-    public List<CodeDetail> listCodeDetail(CommonCode commonCode) {
+    public List<CodeDetail> list(CommonCode commonCode) {
         return codeDetailRepository.findByCommonCode(commonCode);
     }
 
@@ -58,5 +58,10 @@ public class CodeDetailServiceImpl implements CodeDetailService {
     public boolean exitsCodeDetail(CommonCode commonCode, String detailCode) {
         Optional<CodeDetail> findCodeDetail = codeDetailRepository.findByCommonCodeAndDetailCode(commonCode, detailCode);
         return findCodeDetail.isPresent();
+    }
+
+    @Override
+    public Optional<CodeDetail> read(CodeDetail codeDetail) {
+        return codeDetailRepository.findById(codeDetail.getSeq());
     }
 }
