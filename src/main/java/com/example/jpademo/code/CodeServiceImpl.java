@@ -23,7 +23,7 @@ public class CodeServiceImpl implements CodeService {
 
     @Override
     public void create(CommonCode code) {
-        Optional<CommonCode> findCommonCode = commonCodeRepository.findByCode(code.getCode());
+        Optional<CommonCode> findCommonCode = read(code.getCode());
         if(findCommonCode.isPresent()){
             String message = messageSource.getMessage("exception_exist",null, Locale.KOREA);
             throw new ExistsException(message);
