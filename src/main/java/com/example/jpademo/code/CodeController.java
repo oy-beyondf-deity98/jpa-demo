@@ -34,12 +34,14 @@ public class CodeController implements CrudController<CommonCode, String> {
     public void registerForm(Model model) {
         CommonCode code = getCode(null);
 
-        model.addAttribute("code",code);
+        model.addAttribute(code);
     }
 
     @PostMapping("/register")
     public String register(@Validated CommonCode code, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {
+
+//            ResponseEntity
             return "code/register";
         }
 
@@ -53,13 +55,13 @@ public class CodeController implements CrudController<CommonCode, String> {
     @GetMapping("/read")
     public void read(String code, Model model) {
         CommonCode commonCode = getCode(code);
-        model.addAttribute("code",commonCode);
+        model.addAttribute(commonCode);
     }
 
     @GetMapping("/modify")
     public void modifyForm(String code, Model model) {
         CommonCode commonCode = getCode(code);
-        model.addAttribute("code",commonCode);
+        model.addAttribute(commonCode);
     }
 
     @PostMapping("/modify")

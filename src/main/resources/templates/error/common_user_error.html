@@ -6,11 +6,18 @@
 >
 <head>
   <meta charset="UTF-8">
-  <title>오류 페이지 html(400)</title>
+  <title>사용자 오류 페이지(400)</title>
+  <script th:inline="javascript">
+    const resultMsg = [[${msg}]];
+    alert(resultMsg);
+    history.back();
+    
+  </script>
 </head>
 <body>
 <div layout:fragment="content">
-  <h1 th:text="#{error_request}">잘못된 입력입니다.</h1>
+  <h1>사용자 오류 발생</h1>
+  <h2 th:text="${msg}">오류 메세지</h2>
   <a href="/" >Home</a>
 </div>
 </body>

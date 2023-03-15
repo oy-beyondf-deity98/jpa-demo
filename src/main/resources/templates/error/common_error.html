@@ -6,11 +6,11 @@
 >
 <head>
   <meta charset="UTF-8">
-  <title>오류 페이지(408)</title>
+  <title>오류 페이지(500)</title>
 </head>
 <body>
 <div layout:fragment="content">
-  <h1 th:text="#{error_timeout}">타임오류 발생</h1>
+  <h1 th:text="${msg}">오류 메세지</h1>
   <a href="/" >Home</a>
 </div>
 </body>

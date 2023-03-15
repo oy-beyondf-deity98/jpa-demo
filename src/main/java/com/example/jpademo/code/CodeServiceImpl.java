@@ -3,11 +3,14 @@ package com.example.jpademo.code;
 import com.example.jpademo.code.bean.CodeDetail;
 import com.example.jpademo.code.bean.CommonCode;
 import com.example.jpademo.code.detail.CodeDetailRepository;
+import com.example.jpademo.common.exception.ExistsException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 
 @Service
@@ -16,12 +19,14 @@ import java.util.Optional;
 public class CodeServiceImpl implements CodeService {
     final CommonCodeRepository commonCodeRepository;
     final CodeDetailRepository codeDetailRepository;
+    final MessageSource messageSource;
 
     @Override
     public void create(CommonCode code) {
         Optional<CommonCode> findCommonCode = commonCodeRepository.findByCode(code.getCode());
         if(findCommonCode.isPresent()){
-            throw new IllegalArgumentException("이미 존재하는 코드입니다.");
+            String message = messageSource.getMessage("exception_exist",null, Locale.KOREA);
+            throw new ExistsException(message);
         }
 
         //Todo 테스트케이스떄문에 saveAndFlush 썼다.
