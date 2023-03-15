@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net/thymeleaf/layout"
+      layout:decorate="~{/layouts/main_template}"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity"
+>
+<head>
+  <meta charset="UTF-8">
+  <title>사용자 오류 페이지(400)</title>
+  <script th:inline="javascript">
+    const resultMsg = [[${msg}]];
+    alert(resultMsg);
+    history.back();
+    
+  </script>
+</head>
+<body>
+<div layout:fragment="content">
+  <h1>사용자 오류 발생</h1>
+  <h2 th:text="${msg}">오류 메세지</h2>
+  <a href="/" >Home</a>
+</div>
+</body>
+</html>
