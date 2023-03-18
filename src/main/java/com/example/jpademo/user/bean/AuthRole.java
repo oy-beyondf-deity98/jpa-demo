@@ -13,5 +13,5 @@ public class AuthRole {
     @GeneratedValue
     private Long seq;
 
-    private String name;
+    private String role;
 }
