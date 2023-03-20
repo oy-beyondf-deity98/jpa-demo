@@ -1,6 +1,8 @@
 <!-- fragments > header.html-->
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity"
+>
 <head>
   <meta charset="UTF-8">
   <title>Title</title>
@@ -9,8 +11,12 @@
 <body>
 <div align="right" th:fragment="header">
   <table>
-    <tr>
+    <tr sec:authorize="!isAuthenticated()">
       <td width="80"><a href="/user/register" th:text="#{header.joinMember}">회원가입</a></td>
+    </tr>
+    <tr sec:authorize="isAuthenticated()">
+      <td width="80"><span>김규표</span>님 로그인</td>
+      <td width="80"><a href="/logout" th:text="#{header.logout}">로그아웃</a></td>
     </tr>
   </table>
 </div>
