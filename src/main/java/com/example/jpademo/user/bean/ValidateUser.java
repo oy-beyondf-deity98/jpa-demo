@@ -31,7 +31,6 @@ public class ValidateUser implements UserDetailsService {
                 .password(authUser.getUserPassword())
                 .roles(roleList)
                 .build();
-
     }
 
     @Bean

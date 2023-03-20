@@ -1,6 +1,9 @@
 <!-- fragments > menu.html-->
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity"
+>
+
 <head>
   <meta charset="UTF-8">
   <title>Menu</title>
@@ -8,12 +11,16 @@
 <body>
 <div align="center" th:fragment="menu">
   <table>
-    <tr>
+    <tr sec:authorize="!isAuthenticated()">
+      <td width="80"><a href="../home.html" th:href="@{/}" th:text="#{header.home}">홈</a></td>
+    </tr>
+    <tr sec:authorize="isAuthenticated()">
       <td width="80"><a href="../home.html" th:href="@{/}" th:text="#{header.home}">홈</a></td>
       <td width="120"><a href="/code/list.html" th:href="@{/code/list}" th:text="#{memu.codegroup.list}">코드관리</a></td>
-      <td width="120"><a href="/code/list.html" th:href="@{/user/list}" th:text="#{memu.user.list}">사용자관리</a></td>
-      <td width="120"><a href="/code/list.html" th:href="@{/auth/list}" th:text="#{memu.auth.list}">권한관리</a></td>
+      <td width="120" sec:authorize="hasRole('ADMIN')"><a href="/code/list.html" th:href="@{/user/list}" th:text="#{memu.user.list}">사용자관리</a></td>
+      <td width="120" sec:authorize="hasRole('ADMIN')"><a href="/code/list.html" th:href="@{/auth/list}" th:text="#{memu.auth.list}">권한관리</a></td>
     </tr>
+    
   </table>
 </div>
 </body>
