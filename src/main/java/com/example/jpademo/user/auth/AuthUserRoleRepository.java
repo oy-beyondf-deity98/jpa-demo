@@ -9,4 +9,6 @@ import java.util.Optional;
 
 public interface AuthUserRoleRepository extends JpaRepository<AuthUserRole, Long> {
     Optional<AuthUserRole> findByUserAndRole(AuthUser user, AuthRole role);
+
+    Optional<AuthUserRole> findByUser(AuthUser user);
 }

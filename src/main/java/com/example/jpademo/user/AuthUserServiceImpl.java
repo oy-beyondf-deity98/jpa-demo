@@ -46,4 +46,9 @@ public class AuthUserServiceImpl implements AuthUserService {
         return user.isPresent();
     }
 
+    @Override
+    public void createUser(String admin) {
+
+    }
+
 }

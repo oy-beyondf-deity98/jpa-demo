@@ -23,7 +23,7 @@ public class AuthRoleServiceImpl implements AuthRoleService {
     }
 
 
-    private Optional<AuthRole> getRole(AuthRole role) {
+    public Optional<AuthRole> getRole(AuthRole role) {
         return authRoleRepository.findByRole(role.getRole());
     }
 
@@ -32,4 +32,18 @@ public class AuthRoleServiceImpl implements AuthRoleService {
         return authRoleRepository.findAll();
     }
 
+    @Override
+    public Optional<AuthRole> getRole(String role) {
+        AuthRole authRole = new AuthRole();
+        authRole.setRole(role);
+        return getRole(authRole);
+    }
+
+    @Override
+    public void createRole(String admin) {
+        AuthRole authRole = new AuthRole();
+        authRole.setRole(admin);
+
+        createRole(authRole);
+    }
 }

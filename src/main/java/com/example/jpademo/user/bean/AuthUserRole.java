@@ -3,6 +3,7 @@ package com.example.jpademo.user.bean;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 @Entity
 @Getter
@@ -16,4 +17,5 @@ public class AuthUserRole {
     @ManyToOne
     AuthRole role;
 
+    String userPassword;
 }

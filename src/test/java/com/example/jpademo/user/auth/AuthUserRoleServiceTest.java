@@ -15,8 +15,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 @SpringBootTest
 @Transactional
 class AuthUserRoleServiceTest {
@@ -117,5 +115,20 @@ class AuthUserRoleServiceTest {
         // then
         List<AuthUserRole> list = authUserRoleService.list();
         Assertions.assertThat(list.size()).isEqualTo(0);
+    }
+
+    @Test
+    @DisplayName("사용자와 권한을 한꺼번에 추가하기")
+    void initDataUserAndRole(){
+        // given
+        String adminUserId = "admin";
+        String adminRole = "ADMIN";
+
+        // when
+        authUserRoleService.addUserRole(adminUserId,adminRole, "1234");
+//        authUserRoleService.addUserRole(adminUserId,adminRole);
+        // then
+        List<AuthUserRole> list = authUserRoleService.list();
+        Assertions.assertThat(list.size()).isEqualTo(1);
     }
 }

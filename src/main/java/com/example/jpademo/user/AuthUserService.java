@@ -16,4 +16,5 @@ public interface AuthUserService {
 
     boolean existsUser(String userId);
 
+    void createUser(String admin);
 }
