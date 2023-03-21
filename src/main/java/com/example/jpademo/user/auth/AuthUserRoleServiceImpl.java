@@ -46,13 +46,17 @@ public class AuthUserRoleServiceImpl implements AuthUserRoleService {
     //TODO 오류가 발생한다.
     public void addUserRole(String adminUserId, String adminRole, String password) {
 
-
         Optional<AuthUser> user = authUserRepository.findById(adminUserId);
         AuthUser authUser = new AuthUser();
+
         if(user.isEmpty()){
             authUser.setId(adminUserId);
             authUser.setName(adminUserId.toUpperCase());
             authUserRepository.saveAndFlush(authUser);
+
+            authUser = authUserRepository.findById(adminUserId).orElseGet(null);
+        }else{
+            authUser = user.get();
         }
 
         Optional<AuthRole> role = authRoleRepository.findByRole(adminRole);
@@ -61,7 +65,12 @@ public class AuthUserRoleServiceImpl implements AuthUserRoleService {
         if (role.isEmpty()) {
             authRole.setRole(adminRole);
             authRoleRepository.saveAndFlush(authRole);
+
+            authRole = authRoleRepository.findByRole(authRole.getRole()).get();
+
 //            authRoleService.createRole(authRole);
+        }else{
+            authRole = role.get();
         }
 
         String newPassword = new BCryptPasswordEncoder().encode(password);

@@ -51,4 +51,12 @@ public class AuthUserServiceImpl implements AuthUserService {
 
     }
 
+    @Override
+    public void updateUser(AuthUser updateUser) {
+        Optional<AuthUser> findUser = getUser(updateUser.getId());
+        if (findUser.isPresent()) {
+            authUserRepository.save(updateUser);
+        }
+    }
+
 }

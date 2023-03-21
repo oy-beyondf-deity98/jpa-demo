@@ -22,12 +22,12 @@ public class CodeDetailServiceImpl implements CodeDetailService {
 
     @Override
     public void create(CodeDetail codeDetail) {
-        //Todo 테스트케이스떄문에 saveAndFlush 썼다.
+        System.out.println("codeDetail.getCommonCode() = " + codeDetail.getCommonCode());
         boolean exitsCodeDetail = this.exitsCodeDetail(codeDetail);
         if(exitsCodeDetail){
             throw new IllegalArgumentException("코드가 존재합니다.");
         }
-        codeDetailRepository.saveAndFlush(codeDetail);
+        codeDetailRepository.save(codeDetail);
 
     }
 
@@ -51,7 +51,7 @@ public class CodeDetailServiceImpl implements CodeDetailService {
         if (updateCodeDetail.getSeq() == null) {
             throw new IllegalArgumentException("키값이 존재하지 않습니다.");
         }
-        codeDetailRepository.saveAndFlush(updateCodeDetail);
+        codeDetailRepository.save(updateCodeDetail);
     }
 
     @Override

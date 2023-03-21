@@ -2,7 +2,6 @@ package com.example.jpademo.user;
 
 import com.example.jpademo.common.exception.ExistsException;
 import com.example.jpademo.user.bean.AuthUser;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,12 +9,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.MessageSource;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @Transactional
@@ -37,8 +34,8 @@ class AuthUserServiceTest {
         authUserService.createUser(user);
 
         // then
-        List<AuthUser> list = authUserService.userList();
-        assertThat(list.size()).isEqualTo(1);
+        AuthUser authUser = authUserService.getUser(user.getId()).get();
+        assertThat(authUser).isEqualTo(user);
 
     }
 
@@ -55,10 +52,10 @@ class AuthUserServiceTest {
         AuthUser updateUser = new AuthUser();
         updateUser.setId("111");
         updateUser.setName("김똥깡2");
-        authUserService.createUser(updateUser);
+        authUserService.updateUser(updateUser);
 
         // then
-        AuthUser getUser = authUserService.getUser(updateUser.getId()).orElseGet(null);
+        AuthUser getUser = authUserService.getUser(updateUser.getId()).get();
         assertThat(getUser.getName()).isEqualTo(updateUser.getName());
 
     }
@@ -76,8 +73,8 @@ class AuthUserServiceTest {
         authUserService.deleteUser(user.getId());
 
         // then
-        List<AuthUser> userList = authUserService.userList();
-        assertThat(userList.size()).isEqualTo(0);
+        Optional<AuthUser> findUser = authUserService.getUser(user.getId());
+        assertThat(findUser.isEmpty()).isTrue();
 
     }
 
@@ -115,9 +112,7 @@ class AuthUserServiceTest {
 
 
         // then
-        ExistsException existsException = org.junit.jupiter.api.Assertions.assertThrows(ExistsException.class, () -> {
-            authUserService.createUser(updateUser);
-        });
+        ExistsException existsException = org.junit.jupiter.api.Assertions.assertThrows(ExistsException.class, () -> authUserService.createUser(updateUser));
 
         String message = messageSource.getMessage("exception_exist_user",null, Locale.KOREA);
         assertThat(existsException.getMessage()).isEqualTo(message);
