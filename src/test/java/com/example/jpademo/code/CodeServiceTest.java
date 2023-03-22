@@ -136,7 +136,7 @@ class CodeServiceTest {
                 codeService.create(code2)
         );
         // 오류 발생
-        assertThat(exception.getMessage()).isEqualTo("존재합니다.");
+        assertThat(exception.getMessage()).isEqualTo("존재합니다");
     }
 
 }

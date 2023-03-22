@@ -22,16 +22,6 @@ public class SecurityConfig {
 //                .antMatchers("/user/**").hasRole("ADMIN")
                 .anyRequest().authenticated()
         ;
-
-        //h2_console 위한 접속 권한 해제
-        http.authorizeHttpRequests().requestMatchers(PathRequest.toH2Console()).permitAll();
-        http.headers()
-                .frameOptions()
-                .sameOrigin().and();
-
-        http.csrf().disable();
-
-
         http.formLogin().permitAll();
         http.logout().permitAll();
 
