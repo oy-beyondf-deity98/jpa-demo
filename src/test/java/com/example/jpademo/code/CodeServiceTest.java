@@ -30,6 +30,7 @@ class CodeServiceTest {
 
         CommonCode findCommonCode = codeService.read(code).get();
 
+        assertThat(code).isNotSameAs(findCommonCode);
         assertThat(code.getCode()).isEqualTo(findCommonCode.getCode());
     }
 
@@ -49,6 +50,12 @@ class CodeServiceTest {
 
         CommonCode updateCommonCode = codeService.read(findCommonCode).get();
 
+
+        assertThat(code).isNotSameAs(findCommonCode);
+        assertThat(code).isNotSameAs(updateCommonCode);
+        assertThat(findCommonCode).isSameAs(updateCommonCode);
+
+//        assertThat(findCommonCode).isEqualTo(updateCommonCode);
         assertThat(code.getName()).isNotEqualTo(findCommonCode.getName());
         assertThat(findCommonCode.getName()).isEqualTo(updateCommonCode.getName());
     }
@@ -67,6 +74,7 @@ class CodeServiceTest {
 
         Optional<CommonCode> commonCode = codeService.read(code);
 
+        System.out.println("code = " + code);
         assertThat(commonCode).isEmpty();
     }
 
@@ -123,13 +131,12 @@ class CodeServiceTest {
         code2.setCode("type");
         code2.setName("타입명");
 
-
         // then
         IllegalArgumentException exception = org.junit.jupiter.api.Assertions.assertThrows(IllegalArgumentException.class, () ->
                 codeService.create(code2)
         );
         // 오류 발생
-        assertThat(exception.getMessage()).isEqualTo("이미 존재하는 코드입니다.");
+        assertThat(exception.getMessage()).isEqualTo("존재합니다");
     }
 
 }

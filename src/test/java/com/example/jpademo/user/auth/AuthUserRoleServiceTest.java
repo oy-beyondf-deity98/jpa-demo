@@ -61,14 +61,17 @@ class AuthUserRoleServiceTest {
         // when
         authUserRoleService.addUserRole(authUserRole);
         // then
-        List<AuthUserRole> list = authUserRoleService.list();
-        Assertions.assertThat(list.size()).isEqualTo(1);
+        AuthUserRole userRole = authUserRoleService.getUserRole(user.getId()).get();
+//        List<AuthUserRole> list = authUserRoleService.getUserRole(user.getId()).list();
+        Assertions.assertThat(userRole.getUser()).isEqualTo(user);
     }
 
     @Test
     @DisplayName("같은 권한 입력했을때 덥어씌우기")
     void samRoleConfirm(){
         // given
+        List<AuthUserRole> listBefore = authUserRoleService.list();
+
         AuthUserRole authUserRole = new AuthUserRole();
         authUserRole.setUser(user);
         authUserRole.setRole(roleList.get(0));
@@ -79,14 +82,16 @@ class AuthUserRoleServiceTest {
         authUserRole2.setRole(roleList.get(0));
         authUserRoleService.addUserRole(authUserRole2);
         // then
-        List<AuthUserRole> list = authUserRoleService.list();
-        Assertions.assertThat(list.size()).isEqualTo(1);
+        List<AuthUserRole> listAfter = authUserRoleService.list();
+        Assertions.assertThat(listAfter.size()).isEqualTo(listBefore.size() + 1);
     }
 
     @Test
     @DisplayName("같은 사용자 다른 권한 입력했을때는 추가 된다")
     void diffRoleConfirm(){
         // given
+        List<AuthUserRole> listBefore = authUserRoleService.list();
+
         AuthUserRole authUserRole = new AuthUserRole();
         authUserRole.setUser(user);
         authUserRole.setRole(roleList.get(0));
@@ -99,13 +104,15 @@ class AuthUserRoleServiceTest {
 
         // then
         List<AuthUserRole> list = authUserRoleService.list();
-        Assertions.assertThat(list.size()).isEqualTo(2);
+        Assertions.assertThat(list.size()).isEqualTo(listBefore.size() +2);
     }
 
     @Test
     @DisplayName("사용자 권한 제거")
     void removeUserRole(){
         // given
+        List<AuthUserRole> listBefore = authUserRoleService.list();
+
         AuthUserRole authUserRole = new AuthUserRole();
         authUserRole.setUser(user);
         authUserRole.setRole(roleList.get(0));
@@ -114,21 +121,25 @@ class AuthUserRoleServiceTest {
         authUserRoleService.remove(authUserRole);
         // then
         List<AuthUserRole> list = authUserRoleService.list();
-        Assertions.assertThat(list.size()).isEqualTo(0);
+        Assertions.assertThat(list.size()).isEqualTo(listBefore.size());
+
     }
 
+    //이건 안하는 걸로... 아니다 그냥 flush로 하나 넣을까...
     @Test
     @DisplayName("사용자와 권한을 한꺼번에 추가하기")
     void initDataUserAndRole(){
         // given
-        String adminUserId = "admin";
-        String adminRole = "ADMIN";
+        List<AuthUserRole> listBefore = authUserRoleService.list();
+
+        String adminUserId = "admin1";
+        String adminRole = "ADMIN1";
 
         // when
         authUserRoleService.addUserRole(adminUserId,adminRole, "1234");
 //        authUserRoleService.addUserRole(adminUserId,adminRole);
         // then
         List<AuthUserRole> list = authUserRoleService.list();
-        Assertions.assertThat(list.size()).isEqualTo(1);
+        Assertions.assertThat(list.size()).isEqualTo(listBefore.size()+1);
     }
 }

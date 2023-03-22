@@ -30,7 +30,7 @@ public class CodeServiceImpl implements CodeService {
         }
 
         //Todo 테스트케이스떄문에 saveAndFlush 썼다.
-        commonCodeRepository.saveAndFlush(code);
+        commonCodeRepository.save(code);
     }
 
     @Override
@@ -43,8 +43,7 @@ public class CodeServiceImpl implements CodeService {
 
     @Override
     public Optional<CommonCode> read(CommonCode code) {
-        Optional<CommonCode> findCommonCode = commonCodeRepository.findById(code.getCode());
-        return findCommonCode;
+        return commonCodeRepository.findById(code.getCode());
     }
 
     @Override
@@ -80,7 +79,7 @@ public class CodeServiceImpl implements CodeService {
 
     @Override
     public boolean exitsCode(String codeString) {
-        Optional<CommonCode> findCode = commonCodeRepository.findById(codeString);
+        Optional<CommonCode> findCode = read(codeString);
 
         return findCode.isPresent();
     }

@@ -3,6 +3,7 @@ package com.example.jpademo.code.detail;
 import com.example.jpademo.code.CodeService;
 import com.example.jpademo.code.bean.CodeDetail;
 import com.example.jpademo.code.bean.CommonCode;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,63 +23,53 @@ class CodeDetailServiceTest {
     CodeService codeService;
     @Autowired CodeDetailService codeDetailService;
 
+    CommonCode findCode = null;
 
-    @Test
-    @DisplayName("상세 코드 추가")
-    void detailInsert(){
-        // given
+    @BeforeEach
+    void initData(){
         CommonCode code = new CommonCode();
         code.setCode("type");
         code.setName("타입명");
 
         codeService.create(code);
+        findCode = codeService.read("type").get();
+    }
 
-
-        // when
-        CommonCode code2 = new CommonCode();
-        code2.setCode("type");
-
+    @Test
+    @DisplayName("상세 코드 추가")
+    void detailInsert(){
+        // given
         CodeDetail codeDetail = new CodeDetail();
-        codeDetail.setCommonCode(code2);
+        codeDetail.setCommonCode(findCode);
         codeDetail.setDetailCode("10");
         codeDetail.setDetailCodeName("호두");
         codeDetail.setOrderNum(1);
 
-        codeDetailService.create(codeDetail);
-
         CodeDetail codeDetail2 = new CodeDetail();
-        codeDetail2.setCommonCode(code2);
+        codeDetail2.setCommonCode(findCode);
         codeDetail2.setDetailCode("20");
         codeDetail2.setDetailCodeName("호두2222");
         codeDetail2.setOrderNum(2);
 
+        // when
+        codeDetailService.create(codeDetail);
         codeDetailService.create(codeDetail2);
 
-        //TODO 테스트떄에는 트랜잭션이 다 처리 안된상태에서 조회하면 오류가 발생한다. 그래서 saveAndFlush 되어야한다. 그 비슷한 상황이나..
-        List<CodeDetail> list = codeDetailService.list(code2);
+        List<CodeDetail> list = codeDetailService.list(findCode);
 
 
         // then
         assertThat(list.size()).isEqualTo(2);
-        list.stream().forEach(findCodeDetail -> {
-            assertThat(findCodeDetail.getCommonCode()).isNotNull();
-        });
+        list.forEach(findCodeDetail -> assertThat(findCodeDetail.getCommonCode()).isNotNull());
     }
 
     @Test
     @DisplayName("상세 코드 삭제")
     void detailDelete(){
         // given
-        CommonCode code = new CommonCode();
-        code.setCode("type");
-        code.setName("타입명");
-
-        codeService.create(code);
-        CommonCode code2 = new CommonCode();
-        code2.setCode("type");
 
         CodeDetail codeDetail = new CodeDetail();
-        codeDetail.setCommonCode(code2);
+        codeDetail.setCommonCode(findCode);
         codeDetail.setDetailCode("10");
         codeDetail.setDetailCodeName("호두");
         codeDetail.setOrderNum(1);
@@ -86,8 +77,8 @@ class CodeDetailServiceTest {
         codeDetailService.create(codeDetail);
 
         CodeDetail codeDetail2 = new CodeDetail();
-        codeDetail2.setCommonCode(code2);
-        codeDetail2.setDetailCode("10");
+        codeDetail2.setCommonCode(findCode);
+        codeDetail2.setDetailCode("20");
         codeDetail2.setDetailCodeName("호두");
         codeDetail2.setOrderNum(1);
 
@@ -95,7 +86,7 @@ class CodeDetailServiceTest {
 
         // when
         codeDetailService.delete(codeDetail2);
-        List<CodeDetail> list = codeDetailService.list(code2);
+        List<CodeDetail> list = codeDetailService.list(findCode);
 
         // then
         assertThat(list.size()).isEqualTo(1);
@@ -105,19 +96,11 @@ class CodeDetailServiceTest {
     @DisplayName("상세 코드 수정")
     void detailUpdate(){
         // given
-        CommonCode code = new CommonCode();
-        code.setCode("type");
-        code.setName("타입명");
-
-        codeService.create(code);
-
 
         // when
-        CommonCode code2 = new CommonCode();
-        code2.setCode("type");
 
         CodeDetail codeDetail = new CodeDetail();
-        codeDetail.setCommonCode(code2);
+        codeDetail.setCommonCode(findCode);
         codeDetail.setDetailCode("10");
         codeDetail.setDetailCodeName("호두");
         codeDetail.setOrderNum(1);
@@ -125,7 +108,7 @@ class CodeDetailServiceTest {
         codeDetailService.create(codeDetail);
 
         CodeDetail codeDetail2 = new CodeDetail();
-        codeDetail2.setCommonCode(code2);
+        codeDetail2.setCommonCode(findCode);
         codeDetail2.setDetailCode("20");
         codeDetail2.setDetailCodeName("호두");
         codeDetail2.setOrderNum(1);
@@ -133,7 +116,7 @@ class CodeDetailServiceTest {
         codeDetailService.create(codeDetail2);
         // when
         CodeDetail updateCodeDetail = new CodeDetail();
-        updateCodeDetail.setCommonCode(code2);
+        updateCodeDetail.setCommonCode(findCode);
         updateCodeDetail.setDetailCode(codeDetail.getDetailCode());
         updateCodeDetail.setDetailCodeName("호두222");
         updateCodeDetail.setOrderNum(1);
@@ -141,13 +124,12 @@ class CodeDetailServiceTest {
 
         codeDetailService.update(updateCodeDetail);
 
-        List<CodeDetail> codeDetailList = codeDetailService.list(code2);
+        List<CodeDetail> codeDetailList = codeDetailService.list(findCode);
         // then
 
         assertThat(codeDetailList.size()).isEqualTo(2);
-        CodeDetail checkDetail = new CodeDetail();
 
-        codeDetailList.stream().forEach(findDetail ->{
+        codeDetailList.forEach(findDetail ->{
             System.out.println("findDetail.getDetailCode() = " + findDetail.getDetailCode());
             if(findDetail.getDetailCode().equals(updateCodeDetail.getDetailCode())){
                 assertThat(findDetail.getDetailCodeName()).isEqualTo(updateCodeDetail.getDetailCodeName());
@@ -159,17 +141,9 @@ class CodeDetailServiceTest {
     @DisplayName("상세 코드 존재 확인")
     void detailCodeExits(){
         // given
-        CommonCode code = new CommonCode();
-        code.setCode("type");
-        code.setName("타입명");
-
-        codeService.create(code);
-
-        CommonCode code2 = new CommonCode();
-        code2.setCode("type");
 
         CodeDetail codeDetail = new CodeDetail();
-        codeDetail.setCommonCode(code2);
+        codeDetail.setCommonCode(findCode);
         codeDetail.setDetailCode("10");
         codeDetail.setDetailCodeName("호두");
         codeDetail.setOrderNum(1);
@@ -187,19 +161,9 @@ class CodeDetailServiceTest {
     @DisplayName("상세 코드 중복 저장 확인")
     void detailCodeDuplicationError(){
         // given
-        CommonCode code = new CommonCode();
-        code.setCode("type");
-        code.setName("타입명");
-
-        codeService.create(code);
-
-
-        // when
-        CommonCode code2 = new CommonCode();
-        code2.setCode("type");
 
         CodeDetail codeDetail = new CodeDetail();
-        codeDetail.setCommonCode(code2);
+        codeDetail.setCommonCode(findCode);
         codeDetail.setDetailCode("10");
         codeDetail.setDetailCodeName("호두");
         codeDetail.setOrderNum(1);
@@ -208,16 +172,14 @@ class CodeDetailServiceTest {
 
         // when
         CodeDetail codeDetail2 = new CodeDetail();
-        codeDetail2.setCommonCode(code2);
+        codeDetail2.setCommonCode(findCode);
         codeDetail2.setDetailCode("10");
         codeDetail2.setDetailCodeName("호두");
         codeDetail2.setOrderNum(1);
 
 
         // then
-        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
-            codeDetailService.create(codeDetail2);
-        });
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> codeDetailService.create(codeDetail2));
 
         assertThat(exception.getMessage()).isEqualTo("코드가 존재합니다.");
     }
@@ -226,20 +188,9 @@ class CodeDetailServiceTest {
     @DisplayName("공통 코드 삭제할때 하위 코드 모두 삭제 확인")
     void deleteCommonCodeClear(){
         // given
-        // given
-        CommonCode code = new CommonCode();
-        code.setCode("type");
-        code.setName("타입명");
-
-        codeService.create(code);
-
-
-        // when
-        CommonCode code2 = new CommonCode();
-        code2.setCode("type");
 
         CodeDetail codeDetail = new CodeDetail();
-        codeDetail.setCommonCode(code2);
+        codeDetail.setCommonCode(findCode);
         codeDetail.setDetailCode("10");
         codeDetail.setDetailCodeName("호두");
         codeDetail.setOrderNum(1);
@@ -247,7 +198,7 @@ class CodeDetailServiceTest {
         codeDetailService.create(codeDetail);
 
         CodeDetail codeDetail2 = new CodeDetail();
-        codeDetail2.setCommonCode(code2);
+        codeDetail2.setCommonCode(findCode);
         codeDetail2.setDetailCode("20");
         codeDetail2.setDetailCodeName("호두2222");
         codeDetail2.setOrderNum(2);
@@ -255,7 +206,7 @@ class CodeDetailServiceTest {
         codeDetailService.create(codeDetail2);
 
         // when
-        codeService.delete(code);
+        codeService.delete(findCode);
 
         // then
         CommonCode code3 = new CommonCode();
