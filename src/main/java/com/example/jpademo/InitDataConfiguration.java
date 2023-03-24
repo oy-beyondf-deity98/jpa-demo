@@ -1,9 +1,9 @@
 package com.example.jpademo;
 
-import com.example.jpademo.api.lecture.mapping.MappingService;
-import com.example.jpademo.api.lecture.mapping.entity.MappingClass;
-import com.example.jpademo.api.lecture.mapping.entity.MappingLecture;
-import com.example.jpademo.api.lecture.mapping.entity.MappingStudent;
+import com.example.jpademo.api.lecture.mapping.LectureService;
+import com.example.jpademo.api.lecture.mapping.repository.entity.MappingClass;
+import com.example.jpademo.api.lecture.mapping.repository.entity.MappingLecture;
+import com.example.jpademo.api.lecture.mapping.repository.entity.MappingStudent;
 import com.example.jpademo.api.lecture.simple.SimpleLectureService;
 import com.example.jpademo.api.lecture.simple.entity.SimpleLecture;
 import com.example.jpademo.api.lecture.simple.entity.SimpleStudent;
@@ -20,7 +20,7 @@ public class InitDataConfiguration {
     @Autowired
     SimpleLectureService service;
     @Autowired
-    MappingService mappingService;
+    LectureService lectureService;
 
     List<SimpleStudent> listStudent = new ArrayList<>();
 
@@ -61,7 +61,7 @@ public class InitDataConfiguration {
                 return false;
             }
         }).collect(Collectors.toList());
-        mappingService.createStudentClass(studentList.get(0),selectClass);
+        lectureService.applyingClass(studentList.get(0),selectClass);
 
         // when
         // then
@@ -117,7 +117,7 @@ public class InitDataConfiguration {
         mappingClass.setStartTime("11");
         mappingClass.setEndTime("13");
 
-        MappingClass saveClass = mappingService.createClass(mappingClass);
+        MappingClass saveClass = lectureService.createClass(mappingClass);
 
         classList.add(saveClass);
 
@@ -130,7 +130,7 @@ public class InitDataConfiguration {
             MappingStudent student = new MappingStudent();
             student.setName("학생_"+i);
 
-            MappingStudent saveStudent = mappingService.createStudent(student);
+            MappingStudent saveStudent = lectureService.createStudent(student);
 
             studentList.add(saveStudent);
 
@@ -140,15 +140,15 @@ public class InitDataConfiguration {
     private void createLecture() {
         MappingLecture mathLecture = new MappingLecture();
         mathLecture.setName("수학");
-        MappingLecture saveMath = mappingService.createLecture(mathLecture);
+        MappingLecture saveMath = lectureService.createLecture(mathLecture);
 
         MappingLecture scienceLecture = new MappingLecture();
         scienceLecture.setName("과학");
-        MappingLecture saveScience = mappingService.createLecture(scienceLecture);
+        MappingLecture saveScience = lectureService.createLecture(scienceLecture);
 
         MappingLecture englishLecture = new MappingLecture();
         englishLecture.setName("영어");
-        MappingLecture saveEnglish = mappingService.createLecture(englishLecture);
+        MappingLecture saveEnglish = lectureService.createLecture(englishLecture);
 
         lectureList.add(saveMath);
         lectureList.add(saveScience);
@@ -158,7 +158,7 @@ public class InitDataConfiguration {
             MappingLecture generalElective = new MappingLecture();
             generalElective.setName("교양수업_"+i);
 
-            MappingLecture saveGELecture = mappingService.createLecture(generalElective);
+            MappingLecture saveGELecture = lectureService.createLecture(generalElective);
 
             lectureList.add(saveGELecture);
         }

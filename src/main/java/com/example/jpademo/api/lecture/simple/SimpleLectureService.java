@@ -1,6 +1,5 @@
 package com.example.jpademo.api.lecture.simple;
 
-import com.example.jpademo.api.lecture.mapping.entity.MappingClass;
 import com.example.jpademo.api.lecture.simple.entity.SimpleLecture;
 import com.example.jpademo.api.lecture.simple.entity.SimpleStudent;
 
