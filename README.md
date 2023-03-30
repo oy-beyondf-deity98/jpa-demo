@@ -13,10 +13,24 @@ API 문서를 위한 것은 따로 만들도록 하자.
 
 
 ---
+## 사용 방법
 
-사용 방법
 1. Form으로 템플릿 엔진 처리 : CUD 처리
 2. url호출로 템플릿 엔진 처리 : 화면 호출
 3. get방식 api호출로 : 데이터 조회
 
-api는 
+--- 
+## 진행
+1. 스프링 부트 : 3.0.4
+2. spring JPA
+   - H2 
+3. spring Security 
+4. springdoc-openapi : swagger를 wrapping한 라이브러리 
+
+## 접속
+1. http://localhost:8080
+2. http://localhost:8080/swagger-ui/index.html
+
+---
+
+API와 시큐리티 그리고 api문서는 따로 프로젝트를 만든다.
