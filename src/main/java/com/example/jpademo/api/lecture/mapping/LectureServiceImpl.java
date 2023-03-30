@@ -10,9 +10,9 @@ import com.example.jpademo.api.lecture.mapping.repository.MappingLectureReposito
 import com.example.jpademo.api.lecture.mapping.repository.MappingStudentRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Marker;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.ObjectUtils;
 
 import java.util.List;
 
@@ -55,5 +55,17 @@ public class LectureServiceImpl implements LectureService {
     @Override
     public MappingClass createClass(MappingClass mappingClass) {
         return classRepository.save(mappingClass);
+    }
+
+    @Override
+    public List<MappingApplyingClass> listLecture(MappingApplyingClass map) {
+
+        System.out.println("MappingApplyingClass = " + map);
+        if(!ObjectUtils.isEmpty(map.getStudent().getSeq())){
+            return applyingClassRepository.findByStudent(map.getStudent());
+        }else if(!ObjectUtils.isEmpty(map.getStudent().getName())){
+            return applyingClassRepository.findByStudentName(map.getStudent().getName());
+        }
+        return applyingClassRepository.findAll();
     }
 }

@@ -33,14 +33,19 @@ public class SecurityConfig {
 //                .requestMatchers("/lecture/**").permitAll()
                 .requestMatchers("/lecture/**").hasRole("ADMIN")
                 .requestMatchers(PERMIT_URL_ARRAY).permitAll()
+
 //                .requestMatchers("/code_detail/**").hasRole("USER")
 //                .requestMatchers("/code/**").hasRole("USER")
                 //                .antMatchers("/code/**").hasRole("ADMIN")
 //                .antMatchers("/user/**").hasRole("ADMIN")
-                .anyRequest().authenticated()
+                .anyRequest().authenticated();
+
+
         ;
         http.formLogin().permitAll();
         http.logout().permitAll();
+
+
 
         return http.build();
     }

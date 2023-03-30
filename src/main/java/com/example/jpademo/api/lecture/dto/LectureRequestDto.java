@@ -6,4 +6,5 @@ import lombok.Data;
 public class LectureRequestDto {
 
     String name;
+    String studentSeq;
 }
