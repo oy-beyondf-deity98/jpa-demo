@@ -1,10 +1,8 @@
-package com.example.jpademo.api.lecture.mapping.entity;
+package com.example.jpademo.api.lecture.mapping.repository.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-
-import java.util.List;
 
 @Entity
 @Getter

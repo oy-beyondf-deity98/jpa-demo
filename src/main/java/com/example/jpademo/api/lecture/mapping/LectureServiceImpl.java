@@ -1,9 +1,9 @@
 package com.example.jpademo.api.lecture.mapping;
 
-import com.example.jpademo.api.lecture.mapping.entity.MappingApplyingClass;
-import com.example.jpademo.api.lecture.mapping.entity.MappingClass;
-import com.example.jpademo.api.lecture.mapping.entity.MappingLecture;
-import com.example.jpademo.api.lecture.mapping.entity.MappingStudent;
+import com.example.jpademo.api.lecture.mapping.repository.entity.MappingApplyingClass;
+import com.example.jpademo.api.lecture.mapping.repository.entity.MappingClass;
+import com.example.jpademo.api.lecture.mapping.repository.entity.MappingLecture;
+import com.example.jpademo.api.lecture.mapping.repository.entity.MappingStudent;
 import com.example.jpademo.api.lecture.mapping.repository.MappingApplyingClassRepository;
 import com.example.jpademo.api.lecture.mapping.repository.MappingClassRepository;
 import com.example.jpademo.api.lecture.mapping.repository.MappingLectureRepository;
@@ -12,16 +12,15 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.ObjectUtils;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @Transactional
 @Slf4j
 @RequiredArgsConstructor
-public class MappingServiceImpl implements MappingService {
+public class LectureServiceImpl implements LectureService {
     final MappingLectureRepository lectureRepository;
     final MappingStudentRepository studentRepository;
     final MappingClassRepository classRepository;
@@ -39,9 +38,9 @@ public class MappingServiceImpl implements MappingService {
     }
 
     @Override
-    public void createStudentClass(MappingStudent mappingStudent, List<MappingClass> selectClassList) {
-        System.out.println("selectClassList = " + selectClassList);
-        System.out.println("mappingStudent.getSeq() = " + mappingStudent.getSeq());
+    public void applyingClass(MappingStudent mappingStudent, List<MappingClass> selectClassList) {
+        log.info(selectClassList.toString());
+        log.info(mappingStudent.getSeq().toString());
 
         for (MappingClass mappingClass : selectClassList) {
             MappingApplyingClass applyingClass = new MappingApplyingClass();
@@ -56,5 +55,17 @@ public class MappingServiceImpl implements MappingService {
     @Override
     public MappingClass createClass(MappingClass mappingClass) {
         return classRepository.save(mappingClass);
+    }
+
+    @Override
+    public List<MappingApplyingClass> listLecture(MappingApplyingClass map) {
+
+        System.out.println("MappingApplyingClass = " + map);
+        if(!ObjectUtils.isEmpty(map.getStudent().getSeq())){
+            return applyingClassRepository.findByStudent(map.getStudent());
+        }else if(!ObjectUtils.isEmpty(map.getStudent().getName())){
+            return applyingClassRepository.findByStudentName(map.getStudent().getName());
+        }
+        return applyingClassRepository.findAll();
     }
 }
