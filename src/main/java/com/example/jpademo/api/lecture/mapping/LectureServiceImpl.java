@@ -1,13 +1,11 @@
 package com.example.jpademo.api.lecture.mapping;
 
-import com.example.jpademo.api.lecture.mapping.repository.entity.MappingApplyingClass;
-import com.example.jpademo.api.lecture.mapping.repository.entity.MappingClass;
-import com.example.jpademo.api.lecture.mapping.repository.entity.MappingLecture;
-import com.example.jpademo.api.lecture.mapping.repository.entity.MappingStudent;
+import com.example.jpademo.api.lecture.mapping.repository.entity.*;
 import com.example.jpademo.api.lecture.mapping.repository.MappingApplyingClassRepository;
 import com.example.jpademo.api.lecture.mapping.repository.MappingClassRepository;
 import com.example.jpademo.api.lecture.mapping.repository.MappingLectureRepository;
 import com.example.jpademo.api.lecture.mapping.repository.MappingStudentRepository;
+import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -26,6 +24,7 @@ public class LectureServiceImpl implements LectureService {
     final MappingClassRepository classRepository;
 
     final MappingApplyingClassRepository applyingClassRepository;
+    final JPAQueryFactory queryFactory;    // 추가
 
     @Override
     public MappingLecture createLecture(MappingLecture lecture) {
@@ -59,10 +58,16 @@ public class LectureServiceImpl implements LectureService {
 
     @Override
     public List<MappingApplyingClass> listLecture(MappingApplyingClass map) {
+        QMappingApplyingClass findApplyingClass = QMappingApplyingClass.mappingApplyingClass;
 
         System.out.println("MappingApplyingClass = " + map);
+        System.out.println("map.getStudent().getSeq() = " + map.getStudent().getSeq());
         if(!ObjectUtils.isEmpty(map.getStudent().getSeq())){
-            return applyingClassRepository.findByStudent(map.getStudent());
+            List<MappingApplyingClass> fetchList = queryFactory.select(findApplyingClass).where(findApplyingClass.student.seq.eq(map.getStudent().getSeq())).fetch();
+            System.out.println("fetchList = " + fetchList);
+            return fetchList;
+
+//            return applyingClassRepository.findByStudent(map.getStudent());
         }else if(!ObjectUtils.isEmpty(map.getStudent().getName())){
             return applyingClassRepository.findByStudentName(map.getStudent().getName());
         }

@@ -17,5 +17,10 @@ public class MappingApplyingClass {
     @ManyToOne
     MappingStudent student;
 
-
+    @Override
+    public String toString() {
+        return "MappingApplyingClass{" +
+                "seq=" + seq +
+                '}';
+    }
 }
