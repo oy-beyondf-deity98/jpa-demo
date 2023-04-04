@@ -15,7 +15,7 @@
       <td width="80"><a href="/user/register" th:text="#{header.joinMember}">회원가입</a></td>
     </tr>
     <tr sec:authorize="isAuthenticated()">
-      <td width="80"><span>김규표</span>님 로그인</td>
+      <td width="80"><span>user</span>님 로그인</td>
       <td width="80"><a href="/logout" th:text="#{header.logout}">로그아웃</a></td>
     </tr>
   </table>

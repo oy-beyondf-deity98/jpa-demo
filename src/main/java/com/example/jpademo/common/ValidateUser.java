@@ -1,6 +1,7 @@
-package com.example.jpademo.user.bean;
+package com.example.jpademo.common;
 
 import com.example.jpademo.user.auth.AuthUserRoleService;
+import com.example.jpademo.user.bean.AuthUserRole;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.userdetails.User;
