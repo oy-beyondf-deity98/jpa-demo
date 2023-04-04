@@ -63,7 +63,7 @@ public class LectureServiceImpl implements LectureService {
         System.out.println("MappingApplyingClass = " + map);
         System.out.println("map.getStudent().getSeq() = " + map.getStudent().getSeq());
         if(!ObjectUtils.isEmpty(map.getStudent().getSeq())){
-            List<MappingApplyingClass> fetchList = queryFactory.select(findApplyingClass).where(findApplyingClass.student.seq.eq(map.getStudent().getSeq())).fetch();
+            List<MappingApplyingClass> fetchList = queryFactory.selectFrom(findApplyingClass).where(findApplyingClass.student.seq.eq(map.getStudent().getSeq())).fetch();
             System.out.println("fetchList = " + fetchList);
             return fetchList;
 
