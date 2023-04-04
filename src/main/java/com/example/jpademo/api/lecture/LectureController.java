@@ -25,7 +25,19 @@ public class LectureController {
     @GetMapping("/listLecture")
     public List<LectureResponseDto> listLecture(@RequestBody LectureRequestDto lectureRequestDto){
         System.out.println("lectureRequestDto = " + lectureRequestDto);
-        return lectureService.listLecture(modelMapper.map(lectureRequestDto, MappingApplyingClass.class)).stream().map(rtnData -> modelMapper.map(rtnData, LectureResponseDto.class)).collect(Collectors.toList());
+
+        MappingApplyingClass serviceMap = modelMapper.map(lectureRequestDto, MappingApplyingClass.class);
+        List<MappingApplyingClass> mappingApplyingClassList = lectureService.listLecture(serviceMap);
+
+        List<LectureResponseDto> outList =  mappingApplyingClassList.stream().map(rtnData ->{
+
+            LectureResponseDto dto = modelMapper.map(rtnData, LectureResponseDto.class);
+
+            return dto;
+
+        }).collect(Collectors.toList());
+
+        return outList;
     }
 
     //TODO 학생 추가
