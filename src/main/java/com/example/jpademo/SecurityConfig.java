@@ -10,6 +10,8 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 public class SecurityConfig {
 
+    //TODO 사실 해줄필요가 없다.
+    //라이브러리에서 해주기떄문이다. 라이브러리에 swaggerConfig 가지고 있다.
     private static final String[] PERMIT_URL_ARRAY = {
             /* swagger v2 */
             "/v2/api-docs",
@@ -23,9 +25,9 @@ public class SecurityConfig {
             "/v3/api-docs/**",
             "/swagger-ui/**"
     };
-
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        //TODO 바뀌어야 한다. 시큐리티 6부터는 authorizeHttpRequests 써야한다. 쓰는 방식도 바뀌었다.
         http.authorizeRequests()
                 .requestMatchers("/user/**").hasRole("ADMIN")
                 .requestMatchers("/code/**").hasRole("ADMIN")

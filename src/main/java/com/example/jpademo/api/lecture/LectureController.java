@@ -5,7 +5,7 @@ import com.example.jpademo.api.lecture.dto.LectureResponseDto;
 import com.example.jpademo.api.lecture.mapping.LectureService;
 import com.example.jpademo.api.lecture.mapping.repository.entity.MappingApplyingClass;
 import com.example.jpademo.api.lecture.mapping.repository.entity.MappingLecture;
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
+
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.web.bind.annotation.*;
