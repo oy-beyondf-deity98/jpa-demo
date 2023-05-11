@@ -49,4 +49,19 @@ public class AuthRoleServiceImpl implements AuthRoleService {
 
         createRole(authRole);
     }
+
+    @Override
+    public void remove(AuthRole authRole) {
+        authRoleRepository.delete(authRole);
+    }
+
+    @Override
+    public void update(AuthRole entity) {
+        authRoleRepository.save(entity);
+    }
+
+    @Override
+    public Optional<AuthRole> findRole(Long seq) {
+        return authRoleRepository.findById(seq);
+    }
 }

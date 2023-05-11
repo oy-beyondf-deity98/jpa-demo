@@ -32,11 +32,8 @@ public class InitDataConfiguration {
         for(int i=0;i<10;i++){
             SimpleStudent student = new SimpleStudent();
             student.setName("학생_"+i);
-
             SimpleStudent saveStudent = service.createStudent(student);
-
             listStudent.add(saveStudent);
-
         }
     }
 

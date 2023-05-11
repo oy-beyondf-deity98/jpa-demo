@@ -26,8 +26,6 @@ public class CodeController implements CrudController<CommonCode, String> {
     @GetMapping("/list")
     public void list(Model model) {
         List<CommonCode> list = service.list();
-
-
         model.addAttribute("list",list);
     }
 

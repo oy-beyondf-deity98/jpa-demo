@@ -15,4 +15,10 @@ public interface AuthRoleService {
     Optional<AuthRole>  getRole(String role);
 
     void createRole(String admin);
+
+    void remove(AuthRole authRole);
+
+    void update(AuthRole entity);
+
+    Optional<AuthRole> findRole(Long seq);
 }
